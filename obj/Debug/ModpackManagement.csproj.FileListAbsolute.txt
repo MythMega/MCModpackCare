@@ -1,0 +1,11 @@
+C:\Users\mythm\source\repos\ModpackManagement\obj\Debug\ModpackManagement.csproj.AssemblyReference.cache
+C:\Users\mythm\source\repos\ModpackManagement\obj\Debug\ModpackManagement.csproj.SuggestedBindingRedirects.cache
+C:\Users\mythm\source\repos\ModpackManagement\obj\Debug\ModpackManagement.FrmMain.resources
+C:\Users\mythm\source\repos\ModpackManagement\obj\Debug\ModpackManagement.Properties.Resources.resources
+C:\Users\mythm\source\repos\ModpackManagement\obj\Debug\ModpackManagement.csproj.GenerateResource.cache
+C:\Users\mythm\source\repos\ModpackManagement\obj\Debug\ModpackManagement.csproj.CoreCompileInputs.cache
+C:\Users\mythm\source\repos\ModpackManagement\bin\Debug\MCModCare.exe.config
+C:\Users\mythm\source\repos\ModpackManagement\bin\Debug\MCModCare.exe
+C:\Users\mythm\source\repos\ModpackManagement\bin\Debug\MCModCare.pdb
+C:\Users\mythm\source\repos\ModpackManagement\obj\Debug\MCModCare.exe
+C:\Users\mythm\source\repos\ModpackManagement\obj\Debug\MCModCare.pdb
