@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.LinkLabel;
+using System.Threading;
 
 namespace ModpackManagement
 {
@@ -26,6 +27,7 @@ namespace ModpackManagement
         private List<string> groupModList = new List<string>();
         private List<string> DisabledGoupModList = new List<string>();
         private List<string> modModList = new List<string>();
+        private string currentModpack = "";
 
         public FrmMain()
         {
@@ -79,6 +81,7 @@ disabledmods=";
 
         private void cboxModpack_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             currentProfileFile = Path.Combine(modpackFilesPath, cboxModpack.SelectedItem.ToString());
             lblSelectedModpack.Text = $"Selected Modpack : {cboxModpack.SelectedItem}";
 
@@ -86,7 +89,8 @@ disabledmods=";
             {
                 return;
             }
-            
+            moveMods();
+
             // Vérifiez si le fichier existe
             if (File.Exists(configFilePath))
             {
@@ -114,6 +118,51 @@ disabledmods=";
 
             setModlistTexts();
         }
+
+        private void moveMods()
+        {
+            string oldModpack = currentModpack;
+            string newmodpack = cboxModpack.SelectedItem.ToString();
+
+            string pathFolderOldModpack = Path.Combine(Application.StartupPath, oldModpack);
+            string pathFolderNewModpack = Path.Combine(Application.StartupPath, newmodpack);
+
+            if (!Directory.Exists(pathFolderOldModpack))
+            {
+                Directory.CreateDirectory(pathFolderOldModpack);
+            }
+
+            // Déplacer tous les fichiers .jar, .zip, .jmd et .dis du répertoire d'exécution dans le dossier pathFolderOldModpack
+            foreach (var file in Directory.GetFiles(Application.StartupPath, "*.*", SearchOption.TopDirectoryOnly)
+                .Where(s => s.EndsWith(".jar") || s.EndsWith(".zip") || s.EndsWith(".jmd") || s.EndsWith(".dis")))
+            {
+                try
+                {
+                    File.Move(file, Path.Combine(pathFolderOldModpack, Path.GetFileName(file)));
+                } catch { }
+            }
+            Thread.Sleep(500);
+
+            if (!Directory.Exists(pathFolderNewModpack))
+            {
+                Directory.CreateDirectory(pathFolderNewModpack);
+            }
+
+            // Déplacer tous les fichiers .jar, .zip, .jmd et .dis du dossier pathFolderNewModpack dans le répertoire d'exécution
+            foreach (var file in Directory.GetFiles(pathFolderNewModpack, "*.*", SearchOption.TopDirectoryOnly)
+                .Where(s => s.EndsWith(".jar") || s.EndsWith(".zip") || s.EndsWith(".jmd") || s.EndsWith(".dis")))
+            {
+                try {
+                File.Move(file, Path.Combine(Application.StartupPath, Path.GetFileName(file)));
+                }
+                catch { }
+            }
+
+            currentModpack = newmodpack;
+        }
+
+
+
 
         private void loadCheckboxes()
         {
@@ -697,6 +746,7 @@ disabledmods=";
                         {
                             // Sélectionnez cet élément dans la combobox
                             cboxModpack.SelectedItem = packName;
+                            currentModpack = packName;
                         }
                     }
                     // Vérifiez si la ligne commence par 'selectedPack='
